@@ -14,11 +14,22 @@ router.get("/", (req, res) => {
   res.render("index.hbs");
 });
 
+// router.get("/sneakers/collection", (req, res, next) => {
+//   SneakerModel.find()
+//     .then((dbResults) => {
+//       console.log(dbResults);
+//       res.render("products", { dbResults });
+//     })
+//     .catch(next);
+// });
+
 router.get("/sneakers/:cat", (req, res, next) => {
-  console.log(req.params.cat);
-  SneakerModel.find({ category: req.params.cat })
+  let myQuery = {};
+  if (req.params.cat != "collection") myQuery = { category: req.params.cat };
+  SneakerModel.find(myQuery)
     .then((dbResults) => {
-      res.render("products", { category: dbResults });
+      console.log(dbResults);
+      res.render("products", { sneakers: dbResults });
     })
     .catch(next);
 });

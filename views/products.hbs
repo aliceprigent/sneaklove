@@ -1,7 +1,7 @@
 <div class="main-content-products flexed-item big-container">
 
   {{!-- CATEGORY --}}
-  {{!-- <aside class="tag-wrapper">
+  <aside class="tag-wrapper">
     <h4 class="tag-title">All Tags</h4>
     <ul id="tag_list" class="tag-list" data-category="{{category}}">
       {{#each tags}}
@@ -11,16 +11,18 @@
       </li>
       {{/each}}
     </ul>
-  </aside> --}}
+  </aside>
 
   {{!-- PRODUCTS--}}
   <section class="products-wrapper">
     <div class="products-infos">
       <h4 class="products-title">
-        {{#compare category "collection" operator="==="}}
-        {{> sneaker_mini }}
-        {{/compare}}
-       
+      {{#compare category "collection" operator="==="}}
+      <p>{{sneakers.category}}</p> 
+      {{/compare}}
+      {{#compare category "collection" operator="!="}}
+      <p>Whole</p>
+      {{/compare}}
         collection <span id="products_count" class="products-count">({{sneakers.length}})</span>
       </h4>
       <p class="products-subtitle">Prepare for your miles with the latest styles and colors of women’s running shoes.
@@ -31,19 +33,9 @@
     <p>Sorry, no sneakers yet !</p>
     {{/unless}}
     <div id="products_grid" class="products-grid flexed-item">
-      {{#compare category "collection" operator="!="}}
-         {{#each category}}
-        {{> sneaker_mini }}
-        {{/each}}
-        {{/compare}}
-      
-      
-    </div>
-  </section>
-</div>
-
-      <div id="products_grid" class="products-grid flexed-item">
-      {{#each category}}
+      {{#each sneakers}}
       {{> sneaker_mini }}
       {{/each}}
     </div>
+  </section>
+</div>
