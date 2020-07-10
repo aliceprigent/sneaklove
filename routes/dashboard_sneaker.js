@@ -10,9 +10,8 @@ router.get("/prod-manage", (req, res) => {
 });
 
 router.get("/prod-add", (req, res) => {
-    res.render("products_add")
+  res.render("products_add");
 });
-
 
 router.post("/prod-add", uploader.single("picture"), (req, res, next) => {
   const { name, ref, size, description, price, category, id_tags } = req.body;
@@ -31,32 +30,29 @@ router.post("/prod-add", uploader.single("picture"), (req, res, next) => {
 });
 
 router.get("/prod-delete/:id", async (req, res, next) => {
-    try {
-      await SneakerModel.findByIdAndRemove(req.params.id);
-      res.redirect("/prod-manage")
-    } catch(err) {
-      next(err);
-    }
-  });
+  try {
+    await SneakerModel.findByIdAndRemove(req.params.id);
+    res.redirect("/prod-manage");
+  } catch (err) {
+    next(err);
+  }
+});
 
 router.get("/prod-edit/:id", (req, res, next) => {
-    SneakerModel
-    .findById(req.params.id) 
-    .then(sneakers => {
-      res.render("product_edit", {
-        sneakers
-      });
+  SneakerModel.findById(req.params.id)
+    .then((sneaker) => {
+      res.render("product_edit", { sneaker });
     })
-    .catch(next); 
+    .catch(next);
 });
 
 router.post("/prod-edit/:id", (req, res, next) => {
-    SneakerModel
-    .findByIdAndUpdate(req.params.id, req.body)
-    .then(dbRes => {
-    res.redirect("/prod-manage");
+  SneakerModel.findByIdAndUpdate(req.params.id, req.body)
+    .then(() => {
+      req.flash("success", "sneaker successfully updated");
+      res.redirect("/prod-manage");
     })
     .catch(next);
-  });
+});
 
 module.exports = router;

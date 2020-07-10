@@ -8,15 +8,19 @@ console.log(`\n\n
 -----------------------------
      wax on / wax off !
 -----------------------------
------------------------------\n\n`
-);
+-----------------------------\n\n`);
 
 router.get("/", (req, res) => {
   res.render("index.hbs");
 });
 
-router.get("/sneakers/:cat", (req, res) => {
-  res.render("products");
+router.get("/sneakers/:cat", (req, res, next) => {
+  console.log(req.params.cat);
+  SneakerModel.find({ category: req.params.cat })
+    .then((dbResults) => {
+      res.render("products", { category: dbResults });
+    })
+    .catch(next);
 });
 
 router.get("/one-product/:id", (req, res) => {
@@ -29,7 +33,6 @@ router.get("/signup", (req, res) => {
 
 router.get("/signin", (req, res) => {
   res.render("signin");
-}); 
-
+});
 
 module.exports = router;
