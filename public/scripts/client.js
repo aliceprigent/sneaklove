@@ -11,7 +11,7 @@ function displayTags(tag) {
 
 createOneRegister(tag) {
     return axios.post(`${this.BASE_URL}//`, tag);
-  }
+}
 document
   .getElementById("btn_new_tag")
   .addEventListener("submit", function (event) {
