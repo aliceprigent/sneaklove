@@ -1,30 +1,30 @@
-console.log("hello");
 
-const tagAPI = new APIHandler("http://localhost:3003");
+console.log('hello')
+const btn = document.getElementById("btn_new_tag");
+const input = document.getElementById("new_tag_name");
+const form = document.getElementById("tags")
 
-function displayTags(tag) {
-    document.querySelector(
-      ".characters-container"
-    ).innerHTML += `<input id="input_{{$this._id}}" type="checkbox" data-tag-id="{{this._id}}" class="checkbox" />
-    <label for="input_{{this._id}}">{{this.name}}</label>`
-  }
+function sendTag() {
+  axios
+    .post("/tag-add", {
+      label: input.value,
+    })
+    .then((apiResponse) => {
+      console.log(apiResponse.data)
+      console.log("send");
+      form.innerHTML += `<option value="{{this._id}}">${apiResponse.data.label}</option>`
+    })
+    .catch((error) => console.log(error));
+}
 
-createOneRegister(tag) {
-    return axios.post(`${this.BASE_URL}//`, tag);
-  }
-document
-  .getElementById("btn_new_tag")
-  .addEventListener("submit", function (event) {
-    event.preventDefault();
-    const tag = document.getElementById("new_tag_name").value;
-    const tag = {
-      tag: tag,
-    };
-    console.log(tag);
-    tagAPI
-      .create(tag)
-      .then((tag) => {
-        display(tag.data);
-      })
-      .catch((err) => console.log(err));
-  });
+btn.onclick = sendTag;
+
+
+//
+
+
+
+
+
+
+
